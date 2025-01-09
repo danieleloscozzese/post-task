@@ -10,7 +10,7 @@
 	},
 	"version": "1.0.0",
 	"scripts": {
-		"test": "echo 'no tests yet'",
+		"test": "echo 'no tests yet'; exit 0;",
 		"prepublishOnly": "sed 's/export default/module.exports =/g' ./index.mjs > index.cjs"
 	},
 	"repository": {
