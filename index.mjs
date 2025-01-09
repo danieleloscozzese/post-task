@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2024 Adevinta
+// Copyright © 2025 Daniel Arthur Gallagher
 
 /**
  * The priority of the task: these are the priorities of the Scheduler API.
@@ -33,7 +34,9 @@ const priorityCallbackDelays = Object.create(null, {
 
 /**
  * Queues an arbitrary task to be executed in the browser, with the given priority.
- * Allows breaking up the work of potentially long-running tasks to avoid blocking the main thread.
+ * Allows the discrete and prioritied queuing of tasks which if run serially
+ * will block the main thread, but which do not have to be run immediately nor
+ * in a fully-blocking way.
  * @param {Task} task The callback to be executed.
  * @param {SchedulerPriority} priority The priority of the task, following the Scheduler API.
  * @returns {Promise<void>} A promise that resolves when the task is executed, in case it needs to be tracked.
@@ -75,4 +78,26 @@ const postTask = (task, priority) => {
 	}
 };
 
+/**
+ * Yields the JS thread by creating a microtask (which does nothing).
+ * Awaiting the promise created by this task will allow the event loop to
+ * continue and can be used to break up the steps of a task which must be
+ * sequential, which are synchronous, which together are long-running and which
+ * can support a pause in the execution.
+ * Allows breaking up the work of potentially long-running tasks to avoid blocking the main thread.
+ * @returns {Promise<void>} The promise await to allow execution to continue.
+ */
+const yieldTask = () => {
+	if (typeof window !== "undefined" && "scheduler" in window) {
+		return scheduler.yield();
+	} else {
+		return new Promise((resolve) => {
+			setTimeout(() => {
+				resolve();
+			}, 0);
+		});
+	}
+};
+
 export default postTask;
+export { yieldTask };

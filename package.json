@@ -1,17 +1,15 @@
 {
-	"name": "@danieleloscozzese/post-task",
+	"name": "@dagher/post-task",
 	"license": "MIT",
 	"description": "A polyfill for the Scheduler API with a pre-configured progressively-enhanced function helps to split long-running tasks into chunks.",
 	"type": "module",
 	"exports": {
 		"types": "./index.d.ts",
-		"import": "./index.mjs",
-		"require": "./index.cjs"
+		"import": "./index.mjs"
 	},
 	"version": "1.0.0",
 	"scripts": {
-		"test": "echo 'no tests yet'; exit 0;",
-		"prepublishOnly": "sed 's/export default/module.exports =/g' ./index.mjs > index.cjs"
+		"test": "echo 'no tests yet'; exit 0;"
 	},
 	"repository": {
 		"type": "git",

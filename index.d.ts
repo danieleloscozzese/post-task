@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2024 Adevinta
+// Copyright © 2025 Daniel Arthur Gallagher
 
 declare module "post-task" {
 	/**
